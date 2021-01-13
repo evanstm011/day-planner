@@ -1,14 +1,30 @@
-
-
 $(document).ready(function () {
-    //listening for save buttons
     $(".saveBtn").on("click", function () {
-        //getting from input elements
-        var text = $(this).siblings(".description").val
+        // get nearby values
+        var value = $(this).siblings(".description").val();
         var time = $(this).parent().attr("id");
-        //saves in local storage
-        localStorage.setItem(time, text);
- });
+        // save in localStorage
+        localStorage.setItem(time, value);
+    });
+    function timeUpdater() {
+        // variable to set present hour
+        var presentHour = moment().hours();
+        $("time-block").each(function () {
+            var hourBlock = parseInt($(this).attr("id").split("-")[1]);
+            if (hourBlock < presentHour) {
+                $(this).addClass("past");
+            }
+            else if (hourBlock === presentHour) {
+                $(this).removeClass("past");
+                (this).addClass("present");}
+                else if (hourBlock > presentHour){
+                    $(this).removeClass("present");
+                (this).addClass("future");
+            }
+        })
+    }
+    timeUpdater();
+});
 
 
 
@@ -17,5 +33,3 @@ $(document).ready(function () {
 
 
 
- 
-})
